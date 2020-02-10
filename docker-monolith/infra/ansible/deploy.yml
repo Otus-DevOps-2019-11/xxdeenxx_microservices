@@ -1,0 +1,8 @@
+---
+- name: Deploy service
+  hosts: all
+  become: true
+  tasks:
+    - name: Deploy docker container
+      shell:
+        cmd: docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:1.0

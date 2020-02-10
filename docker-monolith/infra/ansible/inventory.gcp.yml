@@ -1,0 +1,11 @@
+plugin: gcp_compute
+zones: # populate inventory with instances in these regions
+  - europe-west4-a
+projects:
+  - docker-267121
+groups:
+  app: "'-docker-' in name"
+hostnames: ["public_ip", "name"]
+filters: []
+service_account_file: /home/user/otus/docker-2d618938c0b9.json
+auth_kind: serviceaccount
