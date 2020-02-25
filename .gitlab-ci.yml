@@ -30,8 +30,7 @@ test_integration_job:
 
 deploy_dev_job:
   stage: review
-  script:
-    - echo 'Deploy'
+  script: echo 'Deploy'
   environment:
     name: dev
     url: http://dev.example.com
