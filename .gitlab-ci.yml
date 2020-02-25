@@ -16,7 +16,9 @@ before_script:
 build_job:
   stage: build
   script:
-    - echo 'Building'
+    - docker build -t reddit:latest docker-monolith/.
+    - docker tag reddit:latest xxdeenxx/otus-reddit:2.0
+    - docker push xxdeenxx/otus-reddit:2.0
 
 test_unit_job:
   stage: test
@@ -32,10 +34,14 @@ test_integration_job:
 
 deploy_dev_job:
   stage: review
-  script: echo 'Deploy'
+  script: echo 'Deploy to $CI_ENVIRONMENT_SLUG'
   environment:
-    name: dev
-    url: http://dev.example.com
+    name:  branch/$CI_COMMIT_REF_NAME
+    url: http://$CI_ENVIRONMENT_SLUG.example.com
+  only:
+    - branches
+  except:
+    - master
 
 staging:
   stage: stage
