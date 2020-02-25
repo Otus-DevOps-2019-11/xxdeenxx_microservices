@@ -16,7 +16,7 @@ before_script:
 build_job:
   stage: build
   script:
-    - docker build -t reddit:latest docker-monolith/.
+    - docker build -t reddit:latest ../docker-monolith/.
     - docker tag reddit:latest xxdeenxx/otus-reddit:2.0
     - docker push xxdeenxx/otus-reddit:2.0
 
