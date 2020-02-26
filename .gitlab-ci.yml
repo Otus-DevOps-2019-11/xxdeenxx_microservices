@@ -47,12 +47,12 @@ deploy_dev_job:
   variables:
     DOCKER_HOST: tcp://35.204.241.105:2376
     DOCKER_TLS_VERIFY: 1
-    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_CERT_PATH: "/certs"
   script:
-    - mkdir -p $DOCKER_TLS_CERTDIR
-    - echo "$TLSCACERT" > $DOCKER_TLS_CERTDIR/ca.pem
-    - echo "$TLSCERT" > $DOCKER_TLS_CERTDIR/cert.pem
-    - echo "$TLSKEY" > $DOCKER_TLS_CERTDIR/key.pem
+    - mkdir -p $DOCKER_CERT_PATH
+    - echo "$TLSCACERT" > $DOCKER_CERT_PATH/ca.pem
+    - echo "$TLSCERT" > $DOCKER_CERT_PATH/cert.pem
+    - echo "$TLSKEY" > $DOCKER_CERT_PATH/key.pem
     - docker login -u $docker_user -p $docker_pass
     - docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_JOB_ID
   environment:
