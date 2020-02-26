@@ -4,23 +4,27 @@ image: docker:19.03.1
 stages:
   - build
   - test
-  - review
+#  - review
+  - dev
   - stage
   - production
 
 variables:
 #  DATABASE_URL: 'mongodb://mongo/user_posts'
   DOCKER_TLS_CERTDIR: "/certs"
-before_script:
+#before_script:
 #  - cd reddit
 #  - bundle install
-  - docker info
-  - docker login -u $docker_user -p $docker_pass
+#  - docker info
+#  - docker login -u $docker_user -p $docker_pass
 
 build_job:
   services:
   - docker:19.03.1-dind
   stage: build
+  before_script:
+  - docker info
+  - docker login -u $docker_user -p $docker_pass
   script:
     - docker build -t reddit:latest docker-monolith/.
     - docker tag reddit:latest xxdeenxx/otus-reddit:$CI_JOB_ID
@@ -39,11 +43,13 @@ build_job:
 #    - echo 'Testing 2'
 
 deploy_dev_job:
-  stage: review
-  script: echo 'Deploy to $CI_ENVIRONMENT_SLUG'
+  stage: dev
+  before_script:
+  - docker login -u $docker_user -p $docker_pass
+  script: docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_JOB_ID
   environment:
     name:  branch/$CI_COMMIT_REF_NAME
-    url: http://$CI_ENVIRONMENT_SLUG.example.com
+    url: http://$CI_ENVIRONMENT_SLUG.35.204.241.105:9292
 #  only:
 #    - branches
 #  except:
