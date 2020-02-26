@@ -46,10 +46,12 @@ deploy_dev_job:
   stage: dev
   before_script:
   - docker login -u $docker_user -p $docker_pass
-  script: docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_JOB_ID
+  script:
+    - export DOCKER_HOST=tcp://10.164.0.21:2375
+    - docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_JOB_ID
   environment:
     name:  branch/$CI_COMMIT_REF_NAME
-    url: http://$CI_ENVIRONMENT_SLUG.35.204.241.105:9292
+    url: http://$CI_ENVIRONMENT_SLUG.35.204.241.105
 #  only:
 #    - branches
 #  except:
