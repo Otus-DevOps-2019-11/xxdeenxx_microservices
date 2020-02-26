@@ -43,6 +43,8 @@ build_job:
 #    - echo 'Testing 2'
 
 deploy_dev_job:
+  services:
+  - docker:18.09.8
   stage: dev
   variables:
     DOCKER_HOST: tcp://35.204.241.105:2376
