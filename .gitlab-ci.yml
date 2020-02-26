@@ -44,10 +44,16 @@ build_job:
 
 deploy_dev_job:
   stage: dev
-  before_script:
-  - docker login -u $docker_user -p $docker_pass
+  variables:
+    DOCKER_HOST: tcp://10.164.0.21:2376
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "/certs"
   script:
-    - export DOCKER_HOST=tcp://10.164.0.21:2375
+    - mkdir -p $DOCKER_CERT_PATH
+    - echo "$TLSCACERT" > $DOCKER_CERT_PATH/ca.pem
+    - echo "$TLSCERT" > $DOCKER_CERT_PATH/cert.pem
+    - echo "$TLSKEY" > $DOCKER_CERT_PATH/key.pem
+    - docker login -u $docker_user -p $docker_pass
     - docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_JOB_ID
   environment:
     name:  branch/$CI_COMMIT_REF_NAME
