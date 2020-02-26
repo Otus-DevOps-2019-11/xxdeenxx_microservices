@@ -19,6 +19,8 @@ variables:
 #  - docker login -u $docker_user -p $docker_pass
 
 build_job:
+  services:
+  - docker:19.03.1-dind
   stage: build
   before_script:
   - docker info
@@ -41,8 +43,6 @@ build_job:
 #    - echo 'Testing 2'
 
 deploy_dev_job:
-  services:
-    - docker:17.09.0-ce
   stage: dev
   variables:
     DOCKER_HOST: tcp://35.204.241.105:2376
