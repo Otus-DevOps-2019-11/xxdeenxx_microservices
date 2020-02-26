@@ -19,8 +19,6 @@ variables:
 #  - docker login -u $docker_user -p $docker_pass
 
 build_job:
-  services:
-  - docker:19.03.1-dind
   stage: build
   before_script:
   - docker info
@@ -47,9 +45,9 @@ deploy_dev_job:
     - docker:17.09.0-ce
   stage: dev
   variables:
-    DOCKER_HOST: tcp://10.164.0.21:2376
+    DOCKER_HOST: tcp://35.204.241.105:2376
     DOCKER_TLS_VERIFY: 1
-    DOCKER_CERT_PATH: "/certs"
+    DOCKER_TLS_CERTDIR: "/certs"
   script:
     - mkdir -p $DOCKER_CERT_PATH
     - echo "$TLSCACERT" > $DOCKER_CERT_PATH/ca.pem
