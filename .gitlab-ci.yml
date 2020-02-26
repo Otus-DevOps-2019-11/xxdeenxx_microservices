@@ -26,17 +26,17 @@ build_job:
     - docker tag reddit:latest xxdeenxx/otus-reddit:$CI_JOB_ID
     - docker push xxdeenxx/otus-reddit:$CI_JOB_ID
 
-test_unit_job:
-  stage: test
-  services:
-    - mongo:latest
-  script:
-    - ruby simpletest.rb
+#test_unit_job:
+#  stage: test
+#  services:
+#    - mongo:latest
+#  script:
+#    - ruby simpletest.rb
 
-test_integration_job:
-  stage: test
-  script:
-    - echo 'Testing 2'
+#test_integration_job:
+#  stage: test
+#  script:
+#    - echo 'Testing 2'
 
 deploy_dev_job:
   stage: review
@@ -44,10 +44,10 @@ deploy_dev_job:
   environment:
     name:  branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
-  only:
-    - branches
-  except:
-    - master
+#  only:
+#    - branches
+#  except:
+#    - master
 
 staging:
   stage: stage
