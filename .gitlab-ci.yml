@@ -43,10 +43,11 @@ build_job:
 #    - echo 'Testing 2'
 
 deploy_dev_job:
-  image: docker:18.09.7
+  services:
+  - docker:19.03.1-dind
   stage: dev
   script:
-    - docker login -u $docker_user -p $docker_pass
+  #  - docker login -u $docker_user -p $docker_pass
     - docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_JOB_ID
   environment:
     name:  dev
