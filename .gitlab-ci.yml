@@ -43,23 +43,14 @@ build_job:
 #    - echo 'Testing 2'
 
 deploy_dev_job:
-  services:
-  - docker:18.09.8
+  image: docker:19.03.1
   stage: dev
-  variables:
-    DOCKER_HOST: tcp://35.204.241.105:2376
-    DOCKER_TLS_VERIFY: 1
-    DOCKER_CERT_PATH: "/certs"
   script:
-    - mkdir -p $DOCKER_CERT_PATH
-    - echo "$TLSCACERT" > $DOCKER_CERT_PATH/ca.pem
-    - echo "$TLSCERT" > $DOCKER_CERT_PATH/cert.pem
-    - echo "$TLSKEY" > $DOCKER_CERT_PATH/key.pem
     - docker login -u $docker_user -p $docker_pass
     - docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_JOB_ID
   environment:
-    name:  branch/$CI_COMMIT_REF_NAME
-    url: http://$CI_ENVIRONMENT_SLUG.35.204.241.105
+    name:  dev
+    url: http://35.204.241.105:9292
 #  only:
 #    - branches
 #  except:
