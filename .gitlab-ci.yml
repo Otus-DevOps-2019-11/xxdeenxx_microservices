@@ -43,7 +43,7 @@ build_job:
 #    - echo 'Testing 2'
 
 deploy_dev_job:
-  image: docker:19.03.1
+  image: docker:18.09.7
   stage: dev
   script:
     - docker login -u $docker_user -p $docker_pass
