@@ -28,7 +28,7 @@ build_job:
   script:
     - docker build -t reddit:latest docker-monolith/.
     - docker tag reddit:latest xxdeenxx/otus-reddit:1.0
-    - docker push xxdeenxx/otus-reddit:$1.0
+    - docker push xxdeenxx/otus-reddit:1.0
 
 #test_unit_job:
 #  stage: test
