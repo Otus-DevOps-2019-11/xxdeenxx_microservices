@@ -27,8 +27,8 @@ build_job:
   - docker login -u $docker_user -p $docker_pass
   script:
     - docker build -t reddit:latest docker-monolith/.
-    - docker tag reddit:latest xxdeenxx/otus-reddit:$CI_CONCURRENT_ID
-    - docker push xxdeenxx/otus-reddit:$CI_CONCURRENT_ID
+    - docker tag reddit:latest xxdeenxx/otus-reddit:$CI_CONCURRENT_PROJECT_ID
+    - docker push xxdeenxx/otus-reddit:$CI_CONCURRENT_PROJECT_ID
 
 #test_unit_job:
 #  stage: test
@@ -47,11 +47,11 @@ deploy_dev_job:
   tags:
     - my-shell-runner
   script:
-    - ssh appuser@34.90.53.154 'docker login -u $docker_user -p $docker_pass'
-    - ssh appuser@34.90.53.154  'docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_CONCURRENT_ID'
+    - docker login -u $docker_user -p $docker_pass
+    - docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_CONCURRENT_PROJECT_ID
   environment:
     name:  dev
-    url: http://34.90.53.154:9292
+    url: http://35.204.241.105:9292
 #  only:
 #    - branches
 #  except:
