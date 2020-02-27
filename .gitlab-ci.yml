@@ -5,7 +5,7 @@ stages:
   - build
   - test
 #  - review
-  - dev
+  - deploy
   - stage
   - production
 
@@ -45,13 +45,16 @@ build_job:
 deploy_dev_job:
   services:
   - docker:19.03.1-dind
-  stage: dev
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
   script:
-    - docker login -u $docker_user -p $docker_pass
-    - docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_CONCURRENT_ID
+    - ssh appuser@34.90.53.154 'docker login -u $docker_user -p $docker_pass'
+    - ssh appuser@34.90.53.154  'docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_CONCURRENT_ID'
   environment:
     name:  dev
-    url: http://35.204.241.105:9292
+    url: http://34.90.53.154:9292
 #  only:
 #    - branches
 #  except:
