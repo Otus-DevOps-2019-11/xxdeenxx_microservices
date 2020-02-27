@@ -49,8 +49,8 @@ deploy_dev_job:
   tags:
     - my-shell-runner
   script:
-  #:q  - docker login -u $docker_user -p $docker_pass
-    - sudo docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_COMMIT_REF_NAME
+    - docker login -u $docker_user -p $docker_pass
+    - docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_COMMIT_REF_NAME
   environment:
     name:  dev
     url: http://35.204.241.105:9292
