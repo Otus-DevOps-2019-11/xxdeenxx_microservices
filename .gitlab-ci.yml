@@ -22,6 +22,8 @@ build_job:
   services:
   - docker:19.03.1-dind
   stage: build
+  tags:
+    - docker
   before_script:
   - docker info
   - docker login -u $docker_user -p $docker_pass
