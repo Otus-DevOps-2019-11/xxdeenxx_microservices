@@ -1,0 +1,82 @@
+#image: ruby:2.4.2
+image: docker:19.03.1
+
+stages:
+  - build
+  - test
+#  - review
+  - deploy
+  - stage
+  - production
+
+variables:
+#  DATABASE_URL: 'mongodb://mongo/user_posts'
+  DOCKER_TLS_CERTDIR: "/certs"
+#before_script:
+#  - cd reddit
+#  - bundle install
+#  - docker info
+#  - docker login -u $docker_user -p $docker_pass
+
+build_job:
+  services:
+  - docker:19.03.1-dind
+  stage: build
+  tags:
+    - docker
+  before_script:
+  - docker info
+  - docker login -u $docker_user -p $docker_pass
+  script:
+    - docker build -t reddit:latest docker-monolith/.
+    - docker tag reddit:latest xxdeenxx/otus-reddit:$CI_COMMIT_REF_NAME
+    - docker push xxdeenxx/otus-reddit:$CI_COMMIT_REF_NAME
+
+#test_unit_job:
+#  stage: test
+#  services:
+#    - mongo:latest
+#  script:
+#    - ruby simpletest.rb
+
+#test_integration_job:
+#  stage: test
+#  script:
+#    - echo 'Testing 2'
+
+deploy_dev_job:
+  stage: deploy
+  tags:
+    - my-shell-runner
+  script:
+    - docker login -u $docker_user -p $docker_pass
+    - docker run --name reddit -d -p 9292:9292 xxdeenxx/otus-reddit:$CI_COMMIT_REF_NAME
+  environment:
+    name:  dev
+    url: http://35.204.241.105:9292
+#  only:
+#    - branches
+#  except:
+#    - master
+
+staging:
+  stage: stage
+  when: manual
+  only:
+    - /^\d+\.\d+\.\d+/
+  script:
+    - echo 'Deploy'
+  environment:
+    name: stage
+    url: https://beta.example.com
+
+production:
+  stage: production
+  when: manual
+  only:
+    - /^\d+\.\d+\.\d+/
+  script:
+    - echo 'Deploy'
+  environment:
+    name: production
+    url: https://example.com
