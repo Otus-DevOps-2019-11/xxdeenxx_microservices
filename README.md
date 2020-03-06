@@ -78,3 +78,25 @@ docker run -d --network=reddit -p 9292:9292 \
 
 Ссылка на канал в слаке
 https://devops-team-otus.slack.com/archives/CRSPED9GD
+
+ДЗ №19
+
+--Основное задание--
+
+1. Познакомились с Рrometheus
+2. Настроили мониторнг нашего сервиса
+3. Добавили сбор метрик хоста с использованием экспортера
+
+https://hub.docker.com/repository/docker/xxdeenxx/prometheus
+https://hub.docker.com/repository/docker/xxdeenxx/comment
+https://hub.docker.com/repository/docker/xxdeenxx/post
+https://hub.docker.com/repository/docker/xxdeenxx/ui
+
+
+--Доп задание--
+
+1. Для мониторинга MongoDB в Prometheus использовал 'percona/mongodb_exporter'
+2. C помощью blackbox_exporter настроил мониторинг comment, post, ui сервисов
+   probe_http_status_code{instance="http://comment:9292/metrics",job="blackbox_exporter"}	200
+   probe_http_status_code{instance="http://post:5000/metrics",job="blackbox_exporter"}	200
+   probe_http_status_code{instance="http://ui:9292/metrics",job="blackbox_exporter"}	200
