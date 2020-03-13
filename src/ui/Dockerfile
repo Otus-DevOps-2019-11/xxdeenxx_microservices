@@ -1,6 +1,8 @@
-FROM ruby:2.5.0-alpine
+FROM ubuntu:16.04
 
-RUN apk --update add --no-cache gcc make g++ zlib-dev
+RUN apt-get update \
+    && apt-get install -y ruby-full ruby-dev build-essential \
+    && gem install bundler --no-ri --no-rdoc
 
 ENV APP_HOME /app
 

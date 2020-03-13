@@ -1,6 +1,6 @@
-FROM ruby:2.2-alpine
+FROM ruby:2.2
 
-RUN apk --update add --no-cache gcc make g++ zlib-dev
+RUN apt-get update -qq && apt-get install -y build-essential
 
 ENV APP_HOME /app
 
