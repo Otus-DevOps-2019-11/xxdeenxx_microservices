@@ -114,3 +114,18 @@ https://hub.docker.com/repository/docker/xxdeenxx/prometheus
 https://hub.docker.com/repository/docker/xxdeenxx/comment
 https://hub.docker.com/repository/docker/xxdeenxx/ui
 https://hub.docker.com/repository/docker/xxdeenxx/post
+
+
+ДЗ №21
+
+--Основное задание--
+
+1. Настроили сбор и парсинг логов при помощи Fluentd
+2. Насроили Kibana для визуализации логов
+3. Подключили сервис распределенного трейсинга Zipkin
+
+
+--Доп задание--
+
+1. К сожаленею выяснил случайно, а не при помощи Zipkin )
+   при копиравнии сломаного кода тк файл post_app.py был открыт в иде, увидел вставленную строку time.sleep(3)
