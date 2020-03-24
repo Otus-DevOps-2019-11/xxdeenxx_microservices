@@ -100,3 +100,17 @@ https://hub.docker.com/repository/docker/xxdeenxx/ui
    probe_http_status_code{instance="http://comment:9292/metrics",job="blackbox_exporter"}	200
    probe_http_status_code{instance="http://post:5000/metrics",job="blackbox_exporter"}	200
    probe_http_status_code{instance="http://ui:9292/metrics",job="blackbox_exporter"}	200
+
+ДЗ №20
+
+--Основное задание--
+
+1. Настроили мониторинг Docker контейнеров
+2. Использовали инструмент Grafana для визуализации данных из Prometheus
+3. Настроили алертинг
+
+https://hub.docker.com/repository/docker/xxdeenxx/alertmanager
+https://hub.docker.com/repository/docker/xxdeenxx/prometheus
+https://hub.docker.com/repository/docker/xxdeenxx/comment
+https://hub.docker.com/repository/docker/xxdeenxx/ui
+https://hub.docker.com/repository/docker/xxdeenxx/post
